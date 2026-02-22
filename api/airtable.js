@@ -1,16 +1,14 @@
+// api/airtable.js - Secure Vercel serverless function
 export default async function handler(req, res) {
-  // Enable CORS
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
 
-  const { tableId, fields } = req.query;
-  
-  if (!tableId) {
-    return res.status(400).json({ error: 'tableId is required' });
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
   }
 
   const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN;
@@ -21,24 +19,35 @@ export default async function handler(req, res) {
   }
 
   try {
-    const fieldParams = fields ? `?fields[]=${fields.split(',').join('&fields[]=')}` : '';
-    const url = `https://api.airtable.com/v0/${BASE_ID}/${tableId}${fieldParams}`;
+    const { tableId, fields } = req.query;
+    
+    if (!tableId) {
+      return res.status(400).json({ error: 'Missing tableId parameter' });
+    }
 
-    const response = await fetch(url, {
+    let airtableUrl = `https://api.airtable.com/v0/${BASE_ID}/${tableId}`;
+    
+    if (fields) {
+      const fieldParams = fields.split(',').map(f => `fields[]=${encodeURIComponent(f)}`).join('&');
+      airtableUrl += `?${fieldParams}`;
+    }
+
+    const response = await fetch(airtableUrl, {
       headers: {
         'Authorization': `Bearer ${AIRTABLE_TOKEN}`,
         'Content-Type': 'application/json'
       }
     });
 
+    const data = await response.json();
+    
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
+      return res.status(response.status).json({ error: data.error || 'Airtable API error' });
     }
 
-    const data = await response.json();
     return res.status(200).json(data);
-    
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    console.error('API Error:', error);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 }
