@@ -297,33 +297,24 @@
             <h2 class="card-title">📝 System Logs</h2>
             <div class="log-container" id="systemLogs">
                 <div class="log-entry log-info">[INFO] Dashboard initialized</div>
-                <div class="log-entry log-info">[INFO] Connecting to Airtable...</div>
+                <div class="log-entry log-info">[INFO] Connecting to secure API...</div>
             </div>
         </div>
     </div>
 
     <script>
-        const AIRTABLE_TOKEN = 'patzVF3ZMYiLH3ECh.723d58ed6557bdf65bd77a0a5c6bbbbd857a649e2e152c94a635a287e399ea41';
-        const BASE_ID = 'appl6ToZSGjS6wU0K';
-
-        // Airtable API helper
+        // Airtable API helper - now calls our secure serverless function
         async function fetchAirtable(tableId, fields = []) {
-            const url = `https://api.airtable.com/v0/${BASE_ID}/${tableId}`;
-            const params = fields.length ? `?fields[]=${fields.join('&fields[]=')}` : '';
+            const fieldParams = fields.length ? `&fields=${fields.join(',')}` : '';
+            const url = `/api/airtable?tableId=${tableId}${fieldParams}`;
 
             try {
-                const response = await fetch(url + params, {
-                    headers: {
-                        'Authorization': `Bearer ${AIRTABLE_TOKEN}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
+                const response = await fetch(url);
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const data = await response.json();
                 return data.records;
             } catch (error) {
-                addLog(`[ERROR] Airtable fetch failed: ${error.message}`, 'error');
+                addLog(`[ERROR] API fetch failed: ${error.message}`, 'error');
                 return [];
             }
         }
