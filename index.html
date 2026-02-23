@@ -372,7 +372,7 @@
         function updateProductsChart(products) {
             const ctx = document.getElementById('productsChart').getContext('2d');
 
-            if (window.productsChart) {
+            if (window.productsChart && typeof window.productsChart.destroy === 'function') {
                 window.productsChart.destroy();
             }
 
