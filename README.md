@@ -1,33 +1,92 @@
 # Marketing Empire Dashboard v2.0
 
-Live real-time dashboard for tracking your automated affiliate marketing system.
+Modern React dashboard built with Next.js 14, Tailwind CSS, and integrated with Airtable for real-time marketing automation tracking.
 
-## Features
+## 🎨 Design
 
-- **Live Airtable Integration**: Real-time data from your Airtable base
-- **Automated Task Tracking**: Countdown timers for all 4 scheduled automations
-- **Revenue & Subscriber Metrics**: Track milestones and growth
-- **AI Agent Team**: Visual representation of your 5-agent automation team
-- **System Logs**: Real-time monitoring of automation activity
+Inspired by [Blaxel AI Dashboard](https://dribbble.com/shots/26596950-Blaxel-AI-Agent-Dashboard-Redesign)
 
-## Setup
+**Features:**
+- ✨ Modern dark theme with purple/blue gradients
+- 📊 Real-time Airtable data integration
+- 📱 Fully responsive design
+- 🎯 Card-based stat widgets
+- 💫 Smooth animations and transitions
+- 🔄 Auto-refresh every 60 seconds
 
-1. Replace `YOUR_AIRTABLE_TOKEN` in `index.html` with your actual Airtable API token
-2. Deploy to Vercel or any static hosting platform
-3. Access your live dashboard
+## 🛠️ Tech Stack
 
-## Airtable Base
+- **Framework:** Next.js 14 (App Router)
+- **UI:** React 18 + Tailwind CSS 3
+- **Charts:** Chart.js + react-chartjs-2
+- **Icons:** Lucide React
+- **Backend:** Serverless API routes
+- **Database:** Airtable
 
-Base ID: `appl6ToZSGjS6wU0K`
+## 🚀 Local Development
 
-Tables:
-- Email Metrics (tblkXDs74AhSD4N4T)
-- Product Performance (tblshfGxKJYZEWyU6)
-- Reddit Performance (tblqPB4YFfZxG2F4E)
+\`\`\`bash
+npm install
+npm run dev
+\`\`\`
 
-## Scheduled Automations
+Open [http://localhost:3000](http://localhost:3000)
 
-1. **Milestone Check** - Every 30 minutes
-2. **Reddit Comment System** - 4x daily (8 AM, 12 PM, 4 PM, 8 PM PST)
-3. **Hyperbrowser Multi-Platform** - 3x daily (10 AM, 2 PM, 6 PM PST)
-4. **Craigslist Lead Generation** - Daily at 1 AM UTC
+## 📦 Deployment
+
+Automatically deploys to Vercel on push to main branch.
+
+**Environment Variables:**
+- \`AIRTABLE_TOKEN\` - Your Airtable API token
+
+## 📁 Project Structure
+
+\`\`\`
+marketing-empire-dashboard/
+├── app/
+│   ├── layout.tsx          # Root layout
+│   ├── page.tsx            # Home page
+│   ├── globals.css         # Global styles
+│   └── api/
+│       └── airtable/
+│           └── route.ts    # Airtable API endpoint
+├── components/
+│   └── Dashboard.tsx       # Main dashboard component
+├── package.json
+├── next.config.js
+├── tailwind.config.js
+├── postcss.config.js
+├── tsconfig.json
+└── vercel.json
+\`\`\`
+
+## 🎯 Features
+
+### Dashboard Overview
+- **Revenue Tracking** - Real-time Amazon affiliate revenue
+- **Email Subscribers** - Total email list size
+- **Conversions** - Product conversion tracking
+- **Engagement Rate** - Reddit automation metrics
+
+### System Health Monitor
+- Airtable sync status
+- Reddit bot activity
+- Email automation status
+- Craigslist posting status
+
+### Activity Feed
+- Recent automation events
+- Real-time updates
+- Status indicators
+
+## 🔧 Customization
+
+Edit \`components/Dashboard.tsx\` to modify:
+- Stat cards and metrics
+- System health indicators
+- Activity feed items
+- Layout and styling
+
+## 📝 License
+
+MIT

@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#0f1117] text-white;
+  }
+}
+
+@layer components {
+  .stat-card {
+    @apply bg-[#1a1d29] rounded-2xl p-6 border border-gray-800;
+    @apply hover:border-purple-500/50 transition-all duration-300;
+    @apply hover:shadow-lg hover:shadow-purple-500/10;
+  }
+
+  .gradient-purple {
+    @apply bg-gradient-to-br from-purple-500 to-blue-500;
+  }
+
+  .gradient-green {
+    @apply bg-gradient-to-br from-green-500 to-emerald-600;
+  }
+
+  .gradient-blue {
+    @apply bg-gradient-to-br from-blue-500 to-cyan-600;
+  }
+}
