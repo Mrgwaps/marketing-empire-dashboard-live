@@ -218,7 +218,7 @@
 
         // Check if already logged in
         if (sessionStorage.getItem('isLoggedIn') === 'true') {
-            window.location.href = "./dashboard.html";
+            window.location.href = "./index.html";
         }
 
         loginForm.addEventListener('submit', async (e) => {
@@ -237,7 +237,7 @@
             if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
                 sessionStorage.setItem('isLoggedIn', 'true');
                 sessionStorage.setItem('userEmail', email);
-                window.location.href = "./dashboard.html";
+                window.location.href = "./index.html";
             } else {
                 errorMessage.textContent = 'Invalid email or password';
                 errorMessage.classList.add('show');
