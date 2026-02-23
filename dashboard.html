@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Empire Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+        }
+        .sidebar {
+            background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 100%);
+            border-right: 1px solid rgba(139, 92, 246, 0.1);
+            padding: 2rem 1.5rem;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 3rem;
+        }
+        .nav-menu { list-style: none; }
+        .nav-item { margin-bottom: 0.5rem; }
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.875rem 1rem;
+            color: #8b8b9a;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.9375rem;
+        }
+        .nav-link:hover {
+            background: rgba(139, 92, 246, 0.1);
+            color: #ffffff;
+        }
+        .nav-link.active {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+            color: #ffffff;
+            border-left: 3px solid #667eea;
+        }
+        .main-content {
+            padding: 2rem 3rem;
+            max-width: 1600px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+        .header-title h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .header-subtitle {
+            color: #8b8b9a;
+            font-size: 0.9375rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #16162a 0%, #1f1f3a 100%);
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            border-radius: 16px;
+            padding: 1.75rem;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.2);
+        }
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .stat-label {
+            color: #8b8b9a;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #d1d1e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-change {
+            font-size: 0.875rem;
+            color: #10b981;
+        }
+        .system-health {
+            background: linear-gradient(135deg, #16162a 0%, #1f1f3a 100%);
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            border-radius: 16px;
+            padding: 1.75rem;
+            margin-bottom: 2.5rem;
+        }
+        .health-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .health-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .health-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
+        }
+        .health-indicator.warning {
+            background: #f59e0b;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+        }
+        .health-label {
+            color: #8b8b9a;
+            font-size: 0.875rem;
+        }
+        .health-value {
+            font-weight: 600;
+            margin-left: auto;
+        }
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        .chart-card {
+            background: linear-gradient(135deg, #16162a 0%, #1f1f3a 100%);
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            border-radius: 16px;
+            padding: 1.75rem;
+        }
+        .chart-header {
+            margin-bottom: 1.5rem;
+        }
+        .chart-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .chart-subtitle {
+            color: #8b8b9a;
+            font-size: 0.875rem;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        @media (max-width: 1024px) {
+            .dashboard-container { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+            .charts-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">⚡ Empire</div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="./dashboard.html" class="nav-link active">📊 Dashboard</a></li>
+                    <li class="nav-item"><a href="./agents.html" class="nav-link">🤖 AI Agents</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">📈 Analytics</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">⚙️ Automation</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">🔗 Integrations</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">📧 Campaigns</a></li>
+                    <li class="nav-item"><a href="./index.html" class="nav-link">🚪 Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="header">
+                <div class="header-title">
+                    <h1>Marketing Empire</h1>
+                    <p class="header-subtitle">Real-time performance dashboard</p>
+                </div>
+                <div class="header-actions">
+                    <a href="./agents.html" class="btn-primary">🤖 AI Agent Team</a>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Email Subscribers</span>
+                        <div class="stat-icon" style="background: rgba(102, 126, 234, 0.15);">📧</div>
+                    </div>
+                    <div class="stat-value" id="emailCount">--</div>
+                    <div class="stat-change" id="emailChange">Loading...</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Total Revenue</span>
+                        <div class="stat-icon" style="background: rgba(16, 185, 129, 0.15);">💰</div>
+                    </div>
+                    <div class="stat-value" id="revenueCount">--</div>
+                    <div class="stat-change" id="revenueChange">Loading...</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Reddit Comments</span>
+                        <div class="stat-icon" style="background: rgba(139, 92, 246, 0.15);">💬</div>
+                    </div>
+                    <div class="stat-value" id="redditCount">--</div>
+                    <div class="stat-change">+0 this week</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-label">Product Clicks</span>
+                        <div class="stat-icon" style="background: rgba(245, 158, 11, 0.15);">🔗</div>
+                    </div>
+                    <div class="stat-value" id="clicksCount">--</div>
+                    <div class="stat-change">Loading...</div>
+                </div>
+            </div>
+            <div class="system-health">
+                <div class="chart-header">
+                    <h3 class="chart-title">System Health</h3>
+                    <p class="chart-subtitle">All systems operational</p>
+                </div>
+                <div class="health-grid">
+                    <div class="health-item"><span class="health-indicator"></span><span class="health-label">Airtable</span><span class="health-value">Active</span></div>
+                    <div class="health-item"><span class="health-indicator warning"></span><span class="health-label">Reddit</span><span class="health-value">500 Errors</span></div>
+                    <div class="health-item"><span class="health-indicator"></span><span class="health-label">Email</span><span class="health-value">Active</span></div>
+                    <div class="health-item"><span class="health-indicator"></span><span class="health-label">Craigslist</span><span class="health-value">Active</span></div>
+                </div>
+            </div>
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Revenue Trend</h3>
+                        <p class="chart-subtitle">Last 7 days</p>
+                    </div>
+                    <div class="chart-container"><canvas id="revenueChart"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Subscriber Growth</h3>
+                        <p class="chart-subtitle">Last 7 days</p>
+                    </div>
+                    <div class="chart-container"><canvas id="subscriberChart"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Top Products</h3>
+                        <p class="chart-subtitle">By performance</p>
+                    </div>
+                    <div class="chart-container"><canvas id="productsChart"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Traffic Sources</h3>
+                        <p class="chart-subtitle">Distribution</p>
+                    </div>
+                    <div class="chart-container"><canvas id="trafficChart"></canvas></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="./config.js"></script>
+    <script>
+        let charts = {};
+        async function fetchAirtableData() {
+            try {
+                const emailRes = await fetch(`/api/airtable?tableId=tblkXDs74AhSD4N4T`);
+                const emailData = await emailRes.json();
+                const emailSignups = emailData.records[0]?.fields?.["Email Signups"] || 0;
+
+                const productsRes = await fetch(`/api/airtable?tableId=tblshfGxKJYZEWyU6`);
+                const productsData = await productsRes.json();
+                const totalRevenue = productsData.records.reduce((sum, r) => sum + (r.fields.Revenue || 0), 0);
+                const totalClicks = productsData.records.reduce((sum, r) => sum + (r.fields.Clicks || 0), 0);
+
+                const redditRes = await fetch(`/api/airtable?tableId=tblqPB4YFfZxG2F4E`);
+                const redditData = await redditRes.json();
+                const commentsPosted = redditData.records[0]?.fields?.["Comments Posted"] || 0;
+
+                document.getElementById('emailCount').textContent = emailSignups;
+                document.getElementById('emailChange').textContent = emailSignups >= 10 ? 'Next: 50 subscribers' : 'Next: 10 subscribers';
+                document.getElementById('revenueCount').textContent = `$${totalRevenue.toFixed(2)}`;
+                document.getElementById('revenueChange').textContent = totalRevenue >= 1 ? 'Next: $10.00' : 'Next: $1.00';
+                document.getElementById('redditCount').textContent = commentsPosted;
+                document.getElementById('clicksCount').textContent = totalClicks;
+
+                updateCharts(productsData.records);
+            } catch (error) { console.error('Error:', error); }
+        }
+        function updateCharts(products) {
+            if (charts.revenue) charts.revenue.destroy();
+            charts.revenue = new Chart(document.getElementById('revenueChart'), {
+                type: 'line',
+                data: {
+                    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+                    datasets: [{ label: 'Revenue', data: [0,0,0,0,0,0,0], borderColor: '#667eea', backgroundColor: 'rgba(102,126,234,0.1)', tension: 0.4, fill: true }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { grid: { color: 'rgba(139,92,246,0.1)' }, ticks: { color: '#8b8b9a' } }, x: { grid: { display: false }, ticks: { color: '#8b8b9a' } } } }
+            });
+            if (charts.subscribers) charts.subscribers.destroy();
+            charts.subscribers = new Chart(document.getElementById('subscriberChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+                    datasets: [{ label: 'New Subscribers', data: [0,0,0,0,0,0,0], backgroundColor: 'rgba(102,126,234,0.8)' }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { grid: { color: 'rgba(139,92,246,0.1)' }, ticks: { color: '#8b8b9a' } }, x: { grid: { display: false }, ticks: { color: '#8b8b9a' } } } }
+            });
+            if (charts.products) charts.products.destroy();
+            charts.products = new Chart(document.getElementById('productsChart'), {
+                type: 'bar',
+                data: {
+                    labels: products.map(p => (p.fields["Product Name"] || '').substring(0,20)),
+                    datasets: [{ label: 'Clicks', data: products.map(p => p.fields.Clicks || 0), backgroundColor: 'rgba(139,92,246,0.8)' }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { grid: { color: 'rgba(139,92,246,0.1)' }, ticks: { color: '#8b8b9a' } }, y: { grid: { display: false }, ticks: { color: '#8b8b9a' } } } }
+            });
+            if (charts.traffic) charts.traffic.destroy();
+            charts.traffic = new Chart(document.getElementById('trafficChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Reddit', 'Craigslist', 'Direct', 'Other'],
+                    datasets: [{ data: [0,0,0,0], backgroundColor: ['#667eea','#764ba2','#10b981','#f59e0b'] }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#8b8b9a', padding: 15 } } } }
+            });
+        }
+        const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+        if (!isAuthenticated) window.location.href = './index.html';
+        fetchAirtableData();
+        setInterval(fetchAirtableData, 60000);
+    </script>
+</body>
+</html>
