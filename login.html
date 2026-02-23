@@ -210,7 +210,7 @@
     <script>
         // For demo: Simple password check (replace with real Supabase in production)
         const DEMO_EMAIL = 'cptdigitals@gmail.com';
-        const DEMO_PASSWORD = 'demo123'; // Change this!
+        const DEMO_PASSWORD = 'admin456!'; // Change this!
 
         const loginForm = document.getElementById('loginForm');
         const loginBtn = document.getElementById('loginBtn');
@@ -218,7 +218,7 @@
 
         // Check if already logged in
         if (sessionStorage.getItem('isLoggedIn') === 'true') {
-            window.location.href = '/dashboard.html';
+            window.location.href = "./dashboard.html";
         }
 
         loginForm.addEventListener('submit', async (e) => {
@@ -237,7 +237,7 @@
             if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
                 sessionStorage.setItem('isLoggedIn', 'true');
                 sessionStorage.setItem('userEmail', email);
-                window.location.href = '/dashboard.html';
+                window.location.href = "./dashboard.html";
             } else {
                 errorMessage.textContent = 'Invalid email or password';
                 errorMessage.classList.add('show');
