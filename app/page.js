@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   TrendingUp, Users, DollarSign, Activity, Mail, MessageSquare, 
   Globe, CheckCircle2, AlertCircle, Sparkles, Zap, Target,
-  BarChart3, LineChart, PieChart, ArrowUpRight
+  BarChart3, LineChart, PieChart, ArrowUpRight, Home, Settings,
+  Bell, Search, Menu, X
 } from 'lucide-react';
 import { 
   AreaChart, Area, BarChart, Bar, LineChart as RechartsLineChart, Line,
@@ -13,6 +14,7 @@ import {
 } from 'recharts';
 
 export default function Dashboard() {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [stats, setStats] = useState({
     revenue: 0,
     subscribers: 0,
@@ -37,6 +39,8 @@ export default function Dashboard() {
     { name: 'Sun', revenue: 0, subscribers: 0, clicks: 0 },
   ]);
 
+  const [recentActivities, setRecentActivities] = useState([]);
+
   // Fetch data from Airtable
   useEffect(() => {
     const fetchData = async () => {
@@ -55,6 +59,11 @@ export default function Dashboard() {
         if (data.chartData) {
           setChartData(data.chartData);
         }
+
+        // Update recent activities if available
+        if (data.recentActivities) {
+          setRecentActivities(data.recentActivities);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -66,8 +75,8 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0e1a] via-[#12162a] to-[#1a1f3a]">
-      {/* Animated background gradient orbs */}
+    <div className="flex min-h-screen bg-gradient-to-br from-[#0a0e1a] via-[#12162a] to-[#1a1f3a]">
+      {/* Animated background orbs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <motion.div
           animate={{
@@ -87,236 +96,284 @@ export default function Dashboard() {
         />
       </div>
 
-      {/* Main container */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-8"
-        >
-          <div className="flex items-center justify-between mb-2">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
-              Marketing Empire Dashboard
-            </h1>
+      {/* Sidebar */}
+      <motion.aside
+        initial={{ x: -280 }}
+        animate={{ x: sidebarOpen ? 0 : -280 }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className="fixed left-0 top-0 h-screen w-64 bg-[#0d1117]/90 backdrop-blur-xl border-r border-purple-500/10 z-50"
+      >
+        <div className="flex flex-col h-full p-6">
+          {/* Logo */}
+          <div className="flex items-center gap-3 mb-8">
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              className="p-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg"
             >
-              <Sparkles className="w-8 h-8 text-purple-400" />
+              <Sparkles className="w-6 h-6 text-white" />
             </motion.div>
+            <div>
+              <h1 className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Marketing
+              </h1>
+              <p className="text-xs text-gray-500">Empire Dashboard</p>
+            </div>
           </div>
-          <p className="text-gray-400 text-lg">Real-time analytics & automation monitoring</p>
-        </motion.div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <StatCard
-            icon={DollarSign}
-            title="Total Revenue"
-            value={`$${stats.revenue.toFixed(2)}`}
-            change="+12.5%"
-            gradient="from-emerald-500 to-teal-600"
-            delay={0.1}
-          />
-          <StatCard
-            icon={Users}
-            title="Subscribers"
-            value={stats.subscribers}
-            change="+8.2%"
-            gradient="from-blue-500 to-purple-600"
-            delay={0.2}
-          />
-          <StatCard
-            icon={Target}
-            title="Conversions"
-            value={stats.conversions}
-            change="+15.3%"
-            gradient="from-pink-500 to-rose-600"
-            delay={0.3}
-          />
-          <StatCard
-            icon={Activity}
-            title="Engagement"
-            value={`${stats.engagement}%`}
-            change="+5.7%"
-            gradient="from-orange-500 to-amber-600"
-            delay={0.4}
-          />
+          {/* Navigation */}
+          <nav className="flex-1 space-y-2">
+            <NavItem icon={Home} label="Dashboard" active />
+            <NavItem icon={BarChart3} label="Analytics" />
+            <NavItem icon={Users} label="Subscribers" />
+            <NavItem icon={Target} label="Campaigns" />
+            <NavItem icon={Settings} label="Settings" />
+          </nav>
+
+          {/* System Status */}
+          <div className="mt-auto pt-4 border-t border-purple-500/10">
+            <div className="flex items-center gap-2 text-sm text-gray-400 mb-2">
+              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+              <span>All Systems Online</span>
+            </div>
+          </div>
+        </div>
+      </motion.aside>
+
+      {/* Main Content */}
+      <div className={`flex-1 transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-0'}`}>
+        {/* Top Bar */}
+        <div className="sticky top-0 z-40 bg-[#0d1117]/80 backdrop-blur-xl border-b border-purple-500/10 px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="p-2 hover:bg-purple-500/10 rounded-lg transition-colors"
+              >
+                {sidebarOpen ? <X className="w-5 h-5 text-gray-400" /> : <Menu className="w-5 h-5 text-gray-400" />}
+              </button>
+              <div>
+                <h2 className="text-2xl font-bold text-white">Dashboard Overview</h2>
+                <p className="text-sm text-gray-400">Real-time analytics & automation monitoring</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <button className="p-2 hover:bg-purple-500/10 rounded-lg transition-colors relative">
+                <Bell className="w-5 h-5 text-gray-400" />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-pink-500 rounded-full" />
+              </button>
+              <button className="p-2 hover:bg-purple-500/10 rounded-lg transition-colors">
+                <Search className="w-5 h-5 text-gray-400" />
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Charts Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <ChartCard title="Revenue Trend" icon={TrendingUp} delay={0.5}>
-            <ResponsiveContainer width="100%" height={250}>
-              <AreaChart data={chartData}>
-                <defs>
-                  <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#2a2f45" />
-                <XAxis dataKey="name" stroke="#6b7280" />
-                <YAxis stroke="#6b7280" />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: '#1a1d29', 
-                    border: '1px solid #374151',
-                    borderRadius: '12px'
-                  }}
-                />
-                <Area 
-                  type="monotone" 
-                  dataKey="revenue" 
-                  stroke="#8b5cf6" 
-                  fillOpacity={1} 
-                  fill="url(#revenueGradient)" 
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </ChartCard>
+        {/* Dashboard Content */}
+        <div className="p-6">
+          {/* Stats Grid - Horizontal 4-column */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <CompactStatCard
+              icon={DollarSign}
+              title="Revenue"
+              value={`$${stats.revenue.toFixed(2)}`}
+              change="+12.5%"
+              gradient="from-emerald-500 to-teal-600"
+              delay={0.1}
+            />
+            <CompactStatCard
+              icon={Users}
+              title="Subscribers"
+              value={stats.subscribers}
+              change="+8.2%"
+              gradient="from-blue-500 to-purple-600"
+              delay={0.2}
+            />
+            <CompactStatCard
+              icon={Target}
+              title="Conversions"
+              value={stats.conversions}
+              change="+15.3%"
+              gradient="from-pink-500 to-rose-600"
+              delay={0.3}
+            />
+            <CompactStatCard
+              icon={Activity}
+              title="Engagement"
+              value={`${stats.engagement}%`}
+              change="+5.7%"
+              gradient="from-orange-500 to-amber-600"
+              delay={0.4}
+            />
+          </div>
 
-          <ChartCard title="Subscriber Growth" icon={Users} delay={0.6}>
-            <ResponsiveContainer width="100%" height={250}>
-              <BarChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#2a2f45" />
-                <XAxis dataKey="name" stroke="#6b7280" />
-                <YAxis stroke="#6b7280" />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: '#1a1d29', 
-                    border: '1px solid #374151',
-                    borderRadius: '12px'
-                  }}
-                />
-                <Bar dataKey="subscribers" fill="#3b82f6" radius={[8, 8, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </ChartCard>
-        </div>
+          {/* Charts Row - 2 columns */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <CompactChartCard title="Revenue Trend" icon={TrendingUp} delay={0.5}>
+              <ResponsiveContainer width="100%" height={200}>
+                <AreaChart data={chartData}>
+                  <defs>
+                    <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#2a2f45" />
+                  <XAxis dataKey="name" stroke="#6b7280" tick={{fontSize: 12}} />
+                  <YAxis stroke="#6b7280" tick={{fontSize: 12}} />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#1a1d29', 
+                      border: '1px solid #374151',
+                      borderRadius: '8px',
+                      fontSize: '12px'
+                    }}
+                  />
+                  <Area 
+                    type="monotone" 
+                    dataKey="revenue" 
+                    stroke="#8b5cf6" 
+                    fillOpacity={1} 
+                    fill="url(#revenueGradient)" 
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </CompactChartCard>
 
-        {/* System Health & Activity Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <SystemHealthCard systemHealth={systemHealth} delay={0.7} />
-          <ActivityCard delay={0.8} />
+            <CompactChartCard title="Subscriber Growth" icon={Users} delay={0.6}>
+              <ResponsiveContainer width="100%" height={200}>
+                <BarChart data={chartData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#2a2f45" />
+                  <XAxis dataKey="name" stroke="#6b7280" tick={{fontSize: 12}} />
+                  <YAxis stroke="#6b7280" tick={{fontSize: 12}} />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#1a1d29', 
+                      border: '1px solid #374151',
+                      borderRadius: '8px',
+                      fontSize: '12px'
+                    }}
+                  />
+                  <Bar dataKey="subscribers" fill="#3b82f6" radius={[6, 6, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </CompactChartCard>
+          </div>
+
+          {/* Bottom Row - System Health + Activity */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <CompactSystemHealth systemHealth={systemHealth} delay={0.7} />
+            <CompactActivityFeed activities={recentActivities} delay={0.8} />
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-// Stat Card Component with animations
-function StatCard({ icon: Icon, title, value, change, gradient, delay }) {
+// Navigation Item
+function NavItem({ icon: Icon, label, active = false }) {
+  return (
+    <motion.button
+      whileHover={{ x: 4 }}
+      className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
+        active 
+          ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-l-2 border-purple-500 text-white' 
+          : 'text-gray-400 hover:bg-purple-500/5 hover:text-gray-300'
+      }`}
+    >
+      <Icon className="w-5 h-5" />
+      <span className="font-medium">{label}</span>
+    </motion.button>
+  );
+}
+
+// Compact Stat Card
+function CompactStatCard({ icon: Icon, title, value, change, gradient, delay }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
-      whileHover={{ scale: 1.02, y: -5 }}
+      transition={{ duration: 0.4, delay }}
+      whileHover={{ scale: 1.02, y: -2 }}
       className="relative group"
     >
-      <div className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl blur-xl from-purple-500/20 to-blue-500/20" />
-      <div className="relative bg-[#1a1d29]/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-800/50 hover:border-purple-500/50 transition-all duration-300">
-        <div className="flex items-start justify-between mb-4">
-          <motion.div 
-            className={`p-3 rounded-xl bg-gradient-to-br ${gradient} shadow-lg`}
-            whileHover={{ rotate: 5, scale: 1.1 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            <Icon className="w-6 h-6 text-white" />
-          </motion.div>
-          <motion.span 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: delay + 0.3 }}
-            className="text-emerald-400 text-sm font-semibold flex items-center gap-1 bg-emerald-500/10 px-3 py-1 rounded-full"
-          >
-            <ArrowUpRight className="w-4 h-4" />
+      <div className={`absolute inset-0 bg-gradient-to-r ${gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-xl blur-xl`} />
+      <div className="relative bg-[#1a1d29]/60 backdrop-blur-xl rounded-xl p-4 border border-gray-800/50 hover:border-purple-500/30 transition-all">
+        <div className="flex items-start justify-between mb-3">
+          <div className={`p-2 rounded-lg bg-gradient-to-br ${gradient} shadow-lg`}>
+            <Icon className="w-5 h-5 text-white" />
+          </div>
+          <span className="text-emerald-400 text-xs font-semibold flex items-center gap-1 bg-emerald-500/10 px-2 py-1 rounded-full">
+            <ArrowUpRight className="w-3 h-3" />
             {change}
-          </motion.span>
+          </span>
         </div>
-        <h3 className="text-gray-400 text-sm font-medium mb-2 uppercase tracking-wide">{title}</h3>
-        <motion.p 
-          className="text-4xl font-bold text-white"
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: delay + 0.2, type: "spring" }}
-        >
-          {value}
-        </motion.p>
+        <h3 className="text-gray-400 text-xs font-medium uppercase tracking-wide mb-1">{title}</h3>
+        <p className="text-2xl font-bold text-white">{value}</p>
       </div>
     </motion.div>
   );
 }
 
-// Chart Card Component
-function ChartCard({ title, icon: Icon, children, delay }) {
+// Compact Chart Card
+function CompactChartCard({ title, icon: Icon, children, delay }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
-      className="bg-[#1a1d29]/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-800/50 hover:border-purple-500/30 transition-all duration-300"
+      transition={{ duration: 0.4, delay }}
+      className="bg-[#1a1d29]/60 backdrop-blur-xl rounded-xl p-5 border border-gray-800/50 hover:border-purple-500/20 transition-all"
     >
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-2 mb-4">
         <div className="p-2 rounded-lg bg-purple-500/10">
-          <Icon className="w-5 h-5 text-purple-400" />
+          <Icon className="w-4 h-4 text-purple-400" />
         </div>
-        <h3 className="text-xl font-semibold text-white">{title}</h3>
+        <h3 className="text-base font-semibold text-white">{title}</h3>
       </div>
       {children}
     </motion.div>
   );
 }
 
-// System Health Card
-function SystemHealthCard({ systemHealth, delay }) {
+// Compact System Health
+function CompactSystemHealth({ systemHealth, delay }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
-      className="bg-[#1a1d29]/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-800/50"
+      transition={{ duration: 0.4, delay }}
+      className="bg-[#1a1d29]/60 backdrop-blur-xl rounded-xl p-5 border border-gray-800/50"
     >
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-2 mb-4">
         <div className="p-2 rounded-lg bg-emerald-500/10">
-          <Zap className="w-5 h-5 text-emerald-400" />
+          <Zap className="w-4 h-4 text-emerald-400" />
         </div>
-        <h3 className="text-xl font-semibold text-white">System Health</h3>
+        <h3 className="text-base font-semibold text-white">System Health</h3>
         <div className="ml-auto flex items-center gap-2 bg-emerald-500/10 px-3 py-1 rounded-full">
           <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-          <span className="text-sm text-emerald-400 font-medium">All Online</span>
+          <span className="text-xs text-emerald-400 font-medium">All Online</span>
         </div>
       </div>
 
-      <div className="space-y-3">
+      <div className="grid grid-cols-2 gap-3">
         {Object.entries(systemHealth).map(([name, status], index) => (
           <motion.div
             key={name}
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: delay + 0.1 * index }}
-            className="flex items-center justify-between p-4 bg-[#12162a] rounded-xl border border-gray-800/30 hover:border-purple-500/30 transition-all group"
+            transition={{ delay: delay + 0.05 * index }}
+            className="flex items-center justify-between p-3 bg-[#12162a] rounded-lg border border-gray-800/30 hover:border-purple-500/20 transition-all"
           >
-            <div className="flex items-center gap-3">
-              {status === 'active' ? (
-                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-              ) : (
-                <AlertCircle className="w-5 h-5 text-red-400" />
-              )}
-              <span className="text-gray-300 font-medium capitalize">{name}</span>
-            </div>
             <div className="flex items-center gap-2">
-              <motion.div 
-                className={`w-2 h-2 rounded-full ${status === 'active' ? 'bg-emerald-400' : 'bg-red-400'}`}
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-              <span className="text-sm text-gray-400 capitalize">{status}</span>
+              {status === 'active' ? (
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              ) : (
+                <AlertCircle className="w-4 h-4 text-red-400" />
+              )}
+              <span className="text-sm text-gray-300 capitalize font-medium">{name}</span>
             </div>
+            <div className={`w-2 h-2 rounded-full ${status === 'active' ? 'bg-emerald-400' : 'bg-red-400'}`} />
           </motion.div>
         ))}
       </div>
@@ -324,46 +381,48 @@ function SystemHealthCard({ systemHealth, delay }) {
   );
 }
 
-// Activity Card
-function ActivityCard({ delay }) {
-  const activities = [
-    { icon: Mail, title: 'New subscriber', time: '2 min ago', status: 'success' },
-    { icon: MessageSquare, title: 'Reddit comment posted', time: '15 min ago', status: 'success' },
-    { icon: Globe, title: 'Craigslist post live', time: '1 hour ago', status: 'success' },
-    { icon: Activity, title: 'Analytics updated', time: '2 hours ago', status: 'success' },
+// Compact Activity Feed
+function CompactActivityFeed({ activities, delay }) {
+  const defaultActivities = [
+    { icon: Mail, title: 'Email sync active', time: 'Live', status: 'success' },
+    { icon: MessageSquare, title: 'Reddit monitoring', time: 'Live', status: 'success' },
+    { icon: Globe, title: 'Craigslist posting', time: 'Live', status: 'success' },
+    { icon: Activity, title: 'Analytics updating', time: 'Live', status: 'success' },
   ];
+
+  const displayActivities = activities.length > 0 ? activities : defaultActivities;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
-      className="bg-[#1a1d29]/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-800/50"
+      transition={{ duration: 0.4, delay }}
+      className="bg-[#1a1d29]/60 backdrop-blur-xl rounded-xl p-5 border border-gray-800/50"
     >
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-2 mb-4">
         <div className="p-2 rounded-lg bg-blue-500/10">
-          <Activity className="w-5 h-5 text-blue-400" />
+          <Activity className="w-4 h-4 text-blue-400" />
         </div>
-        <h3 className="text-xl font-semibold text-white">Recent Activity</h3>
+        <h3 className="text-base font-semibold text-white">Recent Activity</h3>
       </div>
 
-      <div className="space-y-3">
-        {activities.map((activity, index) => (
+      <div className="space-y-2">
+        {displayActivities.slice(0, 4).map((activity, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: delay + 0.1 * index }}
-            className="flex items-center gap-4 p-4 bg-[#12162a] rounded-xl border border-gray-800/30 hover:border-blue-500/30 transition-all group"
+            transition={{ delay: delay + 0.05 * index }}
+            className="flex items-center gap-3 p-3 bg-[#12162a] rounded-lg border border-gray-800/30 hover:border-blue-500/20 transition-all group"
           >
-            <div className="p-2 rounded-lg bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors">
+            <div className="p-2 rounded-lg bg-blue-500/10 group-hover:bg-blue-500/15 transition-colors">
               <activity.icon className="w-4 h-4 text-blue-400" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-gray-200 font-medium">{activity.title}</p>
-              <p className="text-sm text-gray-500">{activity.time}</p>
+              <p className="text-sm text-gray-200 font-medium">{activity.title}</p>
+              <p className="text-xs text-gray-500">{activity.time}</p>
             </div>
-            <div className="w-2 h-2 bg-emerald-400 rounded-full" />
+            <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
           </motion.div>
         ))}
       </div>
