@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { LayoutDashboard, Users, Settings, TrendingUp, Mail, DollarSign, Activity, Brain, Upload, Save, Bell, Lock, Palette, Database, LogOut, MessageSquare, Play, Pause, ChevronRight , Share2} from 'lucide-react';
+import { LayoutDashboard, Users, Settings, TrendingUp, Mail, DollarSign, Activity, Brain, Upload, Save, Bell, Lock, Palette, Database, LogOut, MessageSquare, Play, Pause, ChevronRight , Share2, Facebook, Twitter, Linkedin, Instagram} from 'lucide-react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export default function Dashboard() {
