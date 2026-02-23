@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Removed output: 'export' to enable serverless API routes
-  images: {
-    unoptimized: true,
-  },
+  // Empty config - let Vercel handle deployment automatically
 }
 
 module.exports = nextConfig
