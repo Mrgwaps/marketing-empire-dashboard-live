@@ -1,7 +1,5 @@
 
 "use client";
-const DASHBOARD_VERSION = "v5.1-cachebust-" + Date.now();
-console.log("🚀 Dashboard Version:", DASHBOARD_VERSION);
 
 import { useState, useEffect } from 'react';
 import { LayoutDashboard, Users, Settings, TrendingUp, Mail, DollarSign, Activity, Brain, Upload, Save, Bell, Lock, Palette, Database, LogOut, MessageSquare, Play, Pause, ChevronRight } from 'lucide-react';
