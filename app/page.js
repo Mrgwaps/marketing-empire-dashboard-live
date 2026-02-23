@@ -858,10 +858,23 @@ export default function Dashboard() {
                   <p className="text-white font-medium text-center">Forest Green {accentColor === 'green' && '(Active)'}</p>
                 </button>
               </div>
+                <div className="bg-gradient-to-br from-blue-900 to-cyan-800 p-4 rounded-lg border border-white/20 cursor-pointer hover:border-white/40">
+                  <p className="text-white font-medium text-center">Ocean Blue</p>
+                </div>
+                <div className="bg-gradient-to-br from-gray-900 to-gray-800 p-4 rounded-lg border border-white/20 cursor-pointer hover:border-white/40">
+                  <p className="text-white font-medium text-center">Dark Mode</p>
+                </div>
+              </div>
             </div>
           </div>
         )}
       </div>
-    </div>
+    
+      {/* Cache-busting version badge */}
+      <div className="fixed bottom-4 right-4 z-50 bg-black/80 backdrop-blur-sm px-3 py-1 rounded-full border border-white/20">
+        <p className="text-white/60 text-xs font-mono">v5.6.2026-02-23T08:20:00Z</p>
+      </div>
+
+</div>
   );
 }
