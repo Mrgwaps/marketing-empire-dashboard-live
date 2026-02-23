@@ -153,6 +153,9 @@ export default function Dashboard() {
   ];
 
   useEffect(() => {
+    // SSR guard - only run on client
+    if (typeof window === 'undefined') return;
+
     const authStatus = localStorage.getItem('isAuthenticated');
     if (authStatus === 'true') {
       setIsAuthenticated(true);
