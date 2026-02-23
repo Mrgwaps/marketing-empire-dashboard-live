@@ -858,13 +858,6 @@ export default function Dashboard() {
                   <p className="text-white font-medium text-center">Forest Green {accentColor === 'green' && '(Active)'}</p>
                 </button>
               </div>
-                <div className="bg-gradient-to-br from-blue-900 to-cyan-800 p-4 rounded-lg border border-white/20 cursor-pointer hover:border-white/40">
-                  <p className="text-white font-medium text-center">Ocean Blue</p>
-                </div>
-                <div className="bg-gradient-to-br from-gray-900 to-gray-800 p-4 rounded-lg border border-white/20 cursor-pointer hover:border-white/40">
-                  <p className="text-white font-medium text-center">Dark Mode</p>
-                </div>
-              </div>
             </div>
           </div>
         )}
