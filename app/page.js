@@ -85,7 +85,7 @@ export default function Dashboard() {
     },
     {
       id: 6,
-      name: 'Sarah O'Connor',
+      name: "Sarah O'Connor",
       role: 'Conversion Optimizer',
       ethnicity: 'Irish-American',
       avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&crop=faces',
