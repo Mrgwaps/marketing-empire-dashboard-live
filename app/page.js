@@ -397,7 +397,8 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Platform Performance Cards */}
+            {/* Platform Performance Cards */
+            {socialData.platforms && socialData.platforms.length > 0 && (
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg border border-white/20">
               <h3 className="text-white font-semibold mb-4">Platform Performance</h3>
 
@@ -494,8 +495,7 @@ export default function Dashboard() {
                 ))}
               </div>
             </div>
-
-            <div className="bg-white/10 backdrop-blur-sm p-4 rounded-lg border border-white/20">
+            )}ame="bg-white/10 backdrop-blur-sm p-4 rounded-lg border border-white/20">
               <h3 className="text-white font-semibold mb-3 text-sm flex items-center gap-2">
                 <Activity size={16} />
                 Recent Activity
