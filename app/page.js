@@ -43,112 +43,63 @@ export default function Dashboard() {
       name: 'Sophia Chen',
       role: 'Content Strategist',
       ethnicity: 'Asian-American',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sophia&backgroundColor=b6e3f4&skinColor=ffdbb4',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=faces',
       status: 'active',
-      tasks: ['Reddit Content Calendar', 'Email Sequence Optimization', 'Trend Analysis'],
-      completedTasks: 47,
-      totalTasks: 52,
-      memory: 2.4,
-      skills: ['SEO Writing', 'Social Media Strategy', 'Analytics'],
-      cost: 0.23,
-      description: 'Expert in crafting viral content and building engagement strategies across platforms.',
-      voice: 'en-US-Neural2-F'
+      tasks: ['Reddit Content Calendar', 'Email Sequence Optimization', 'Trend Analysis']
     },
     {
       id: 2,
       name: 'Marcus Johnson',
       role: 'Data Analyst',
       ethnicity: 'African-American',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Marcus&backgroundColor=c0aede&skinColor=ae5d29',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=faces',
       status: 'active',
-      tasks: ['Airtable Metrics Tracking', 'Conversion Rate Analysis', 'A/B Test Results'],
-      completedTasks: 38,
-      totalTasks: 40,
-      memory: 3.1,
-      skills: ['Python Analytics', 'Data Visualization', 'Statistical Modeling'],
-      cost: 0.31,
-      description: 'Data-driven decision maker specializing in marketing analytics and performance optimization.',
-      voice: 'en-US-Neural2-D'
+      tasks: ['Analytics Dashboard', 'Performance Metrics', 'ROI Tracking']
     },
     {
       id: 3,
-      name: 'Isabella Rodriguez',
-      role: 'Email Automation Specialist',
+      name: 'Elena Rodriguez',
+      role: 'Community Manager',
       ethnicity: 'Latina',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Isabella&backgroundColor=ffdfbf&skinColor=d08b5b',
+      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=faces',
       status: 'active',
-      tasks: ['Brevo Campaign Management', 'Segmentation Strategy', 'Drip Sequence Design'],
-      completedTasks: 29,
-      totalTasks: 35,
-      memory: 1.8,
-      skills: ['Marketing Automation', 'Copywriting', 'Customer Journey Mapping'],
-      cost: 0.18,
-      description: 'Masters email marketing with data-backed personalization and automation expertise.',
-      voice: 'en-US-Neural2-G'
+      tasks: ['Engagement Tracking', 'Comment Moderation', 'Community Growth']
     },
     {
       id: 4,
-      name: 'Ava Williams',
-      role: 'Product Research Lead',
-      ethnicity: 'African-American',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ava&backgroundColor=ffd5dc&skinColor=614335',
+      name: 'Aisha Patel',
+      role: 'Email Marketing Specialist',
+      ethnicity: 'South Asian',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop&crop=faces',
       status: 'active',
-      tasks: ['Amazon Product Analysis', 'Competitor Research', 'Trend Forecasting'],
-      completedTasks: 43,
-      totalTasks: 45,
-      memory: 2.7,
-      skills: ['Market Research', 'Product Analytics', 'Competitive Intelligence'],
-      cost: 0.27,
-      description: 'Identifies high-converting luxury beauty products and emerging market opportunities.',
-      voice: 'en-US-Neural2-H'
+      tasks: ['Brevo Automation', 'Email Sequences', 'Subscriber Segmentation']
     },
     {
       id: 5,
-      name: 'Daniel Kim',
-      role: 'Automation Engineer',
-      ethnicity: 'Asian-American',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Daniel&backgroundColor=d1d4f9&skinColor=ffdbb4',
-      status: 'active',
-      tasks: ['Hyperbrowser Setup', 'API Integration', 'Workflow Optimization'],
-      completedTasks: 35,
-      totalTasks: 38,
-      memory: 4.2,
-      skills: ['JavaScript/Python', 'API Development', 'System Architecture'],
-      cost: 0.42,
-      description: 'Builds and maintains the technical infrastructure powering the marketing automation.',
-      voice: 'en-US-Neural2-J'
+      name: 'David Kim',
+      role: 'SEO Specialist',
+      ethnicity: 'Korean-American',
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=faces',
+      status: 'idle',
+      tasks: ['Keyword Research', 'Content Optimization', 'Link Building']
     },
     {
       id: 6,
-      name: 'Zara Patel',
-      role: 'Community Manager',
-      ethnicity: 'South Asian',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Zara&backgroundColor=c7ecee&skinColor=ffdbb4',
+      name: 'Sarah O'Connor',
+      role: 'Conversion Optimizer',
+      ethnicity: 'Irish-American',
+      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&crop=faces',
       status: 'active',
-      tasks: ['Reddit Engagement', 'Comment Moderation', 'Influencer Outreach'],
-      completedTasks: 52,
-      totalTasks: 55,
-      memory: 1.5,
-      skills: ['Community Building', 'Social Listening', 'Crisis Management'],
-      cost: 0.15,
-      description: 'Cultivates authentic relationships and manages brand reputation across communities.',
-      voice: 'en-GB-Neural2-A'
+      tasks: ['A/B Testing', 'Landing Page Optimization', 'Funnel Analysis']
     },
     {
       id: 7,
-      name: 'Jamal Washington',
-      role: 'Conversion Optimizer',
-      ethnicity: 'African-American',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jamal&backgroundColor=b6e3f4&skinColor=7a4419',
+      name: 'James Williams',
+      role: 'Product Research Lead',
+      ethnicity: 'British',
+      avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop&crop=faces',
       status: 'active',
-      tasks: ['Landing Page Testing', 'CTA Optimization', 'Funnel Analysis'],
-      completedTasks: 31,
-      totalTasks: 33,
-      memory: 2.9,
-      skills: ['CRO', 'UX Design', 'Behavioral Psychology'],
-      cost: 0.29,
-      description: 'Maximizes conversion rates through psychology-driven design and testing strategies.',
-      voice: 'en-US-Neural2-A'
+      tasks: ['Amazon Product Research', 'Competitor Analysis', 'Trend Forecasting']
     }
   ];
 
@@ -449,6 +400,71 @@ export default function Dashboard() {
             {/* Platform Performance Cards */}
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg border border-white/20">
               <h3 className="text-white font-semibold mb-4">Platform Performance</h3>
+
+              {/* Platform Health Status */}
+              <div className="mb-6">
+                <h4 className="text-white/80 font-medium mb-3 flex items-center gap-2">
+                  <Activity size={16} className="text-green-400" />
+                  Platform Health
+                </h4>
+                <div className="grid grid-cols-5 gap-3">
+                  <div className="bg-white/5 backdrop-blur-sm p-3 rounded-lg border border-white/10">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Facebook size={16} className="text-blue-400" />
+                      <p className="text-white/70 text-sm font-medium">Facebook</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                      <p className="text-green-400 text-xs">Active</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-white/5 backdrop-blur-sm p-3 rounded-lg border border-white/10">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Twitter size={16} className="text-sky-400" />
+                      <p className="text-white/70 text-sm font-medium">Twitter/X</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                      <p className="text-green-400 text-xs">Active</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-white/5 backdrop-blur-sm p-3 rounded-lg border border-white/10">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Linkedin size={16} className="text-blue-600" />
+                      <p className="text-white/70 text-sm font-medium">LinkedIn</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                      <p className="text-green-400 text-xs">Active</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-white/5 backdrop-blur-sm p-3 rounded-lg border border-white/10">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Instagram size={16} className="text-pink-400" />
+                      <p className="text-white/70 text-sm font-medium">Instagram</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
+                      <p className="text-yellow-400 text-xs">Pending</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-white/5 backdrop-blur-sm p-3 rounded-lg border border-white/10">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Share2 size={16} className="text-orange-400" />
+                      <p className="text-white/70 text-sm font-medium">Reddit</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                      <p className="text-green-400 text-xs">Active</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                 {socialData.platforms.map((platform) => (
                   <div key={platform.name} className="bg-white/5 p-3 rounded-lg border border-white/10">
@@ -832,9 +848,16 @@ export default function Dashboard() {
                 Theme & Appearance
               </h3>
               <div className="grid grid-cols-3 gap-3">
-                <div className="bg-gradient-to-br from-purple-900 to-pink-800 p-4 rounded-lg border-2 border-white/40 cursor-pointer">
-                  <p className="text-white font-medium text-center">Purple Dream (Active)</p>
-                </div>
+                <button onClick={() => setAccentColor('purple')} className={`bg-gradient-to-br from-purple-900 to-pink-800 p-4 rounded-lg border-2 ${accentColor === 'purple' ? 'border-white/40' : 'border-white/20'} cursor-pointer hover:border-white/40 transition-all`}>
+                  <p className="text-white font-medium text-center">Purple Dream {accentColor === 'purple' && '(Active)'}</p>
+                </button>
+                <button onClick={() => setAccentColor('blue')} className={`bg-gradient-to-br from-blue-900 to-cyan-800 p-4 rounded-lg border-2 ${accentColor === 'blue' ? 'border-white/40' : 'border-white/20'} cursor-pointer hover:border-white/40 transition-all`}>
+                  <p className="text-white font-medium text-center">Ocean Blue {accentColor === 'blue' && '(Active)'}</p>
+                </button>
+                <button onClick={() => setAccentColor('green')} className={`bg-gradient-to-br from-green-900 to-emerald-800 p-4 rounded-lg border-2 ${accentColor === 'green' ? 'border-white/40' : 'border-white/20'} cursor-pointer hover:border-white/40 transition-all`}>
+                  <p className="text-white font-medium text-center">Forest Green {accentColor === 'green' && '(Active)'}</p>
+                </button>
+              </div>
                 <div className="bg-gradient-to-br from-blue-900 to-cyan-800 p-4 rounded-lg border border-white/20 cursor-pointer hover:border-white/40">
                   <p className="text-white font-medium text-center">Ocean Blue</p>
                 </div>
