@@ -300,7 +300,7 @@
                 sessionStorage.setItem('user_email', email);
 
                 // Redirect to dashboard
-                window.location.href = './index.html';
+                window.location.href = '/dashboard.html';
             } else {
                 // Show error
                 errorMsg.textContent = '❌ Invalid credentials. Please try again.';
@@ -315,7 +315,7 @@
 
         // Check if already authenticated
         if (sessionStorage.getItem('authenticated') === 'true') {
-            window.location.href = './index.html';
+            window.location.href = '/dashboard.html';
         }
     </script>
 </body>
